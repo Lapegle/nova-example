@@ -63,7 +63,7 @@ class Post extends Resource
                     return $request->user()->can('update-post', $this->resource);
                 })
                 ->canRun(function (NovaRequest $request, \App\Models\Post $post) {
-                    return $post->status !== PostStatus::Archived;
+                    return $post->status !== PostStatus::Archived  && $request->user()->can('update-post', $post);
                 }),
 
 
@@ -73,7 +73,7 @@ class Post extends Resource
             */
             PublishPost::make()
                 ->canRun(function (NovaRequest $request, \App\Models\Post $post) {
-                    return $post->status !== PostStatus::Published;
+                    return $post->status !== PostStatus::Published && $request->user()->can('update-post', $post);
                 }),
         ];
     }
