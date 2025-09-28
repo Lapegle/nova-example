@@ -60,7 +60,7 @@ class Post extends Resource
                         return true;
                     }
 
-                    return $request->user()->can('update-post', $this->resource);
+                    return $request->user()->can('update-post', $this->resource);  // update-post is Gate ability, which checks if the user owns the post
                 })
                 ->canRun(function (NovaRequest $request, \App\Models\Post $post) {
                     return $post->status !== PostStatus::Archived  && $request->user()->can('update-post', $post);
